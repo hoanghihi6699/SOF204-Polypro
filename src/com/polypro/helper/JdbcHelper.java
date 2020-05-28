@@ -45,6 +45,13 @@ public class JdbcHelper {
      */
     public static PreparedStatement prepareStatement(String sql, Object... args) throws SQLException {
         Connection connection = DriverManager.getConnection(dburl, username, password);
+        if (connection == null) {
+            System.out.println("Loi ket noi");
+        }
+        else{
+            System.out.println("Connected");
+        }
+        
         PreparedStatement pstmt = null;
         if (sql.trim().startsWith("{")) {
             pstmt = connection.prepareCall(sql);
