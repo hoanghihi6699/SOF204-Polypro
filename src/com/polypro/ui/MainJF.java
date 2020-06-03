@@ -35,7 +35,7 @@ public class MainJF extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setSize(1280, 760);
         setIconImage(ShareHelper.APP_ICON);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);    
 
         new Timer(1000, new ActionListener() {
             SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss a");
@@ -45,7 +45,7 @@ public class MainJF extends javax.swing.JFrame {
                 lblDongHo.setText(format.format(new Date()));
             }
         }).start();
-        this.openWelcome();
+//        this.openWelcome();
         this.openLogin();
     }
 
@@ -178,6 +178,7 @@ public class MainJF extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
+        btnDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Exit.png"))); // NOI18N
         btnDangXuat.setText("Đăng xuât");
         btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,10 +187,11 @@ public class MainJF extends javax.swing.JFrame {
         });
         jToolBar1.add(btnDangXuat);
 
+        btnKetThuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Stop.png"))); // NOI18N
         btnKetThuc.setText("Kết thúc");
-        btnKetThuc.setFocusable(false);
-        btnKetThuc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnKetThuc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnKetThuc.setMargin(new java.awt.Insets(2, 2, 2, 14));
+        btnKetThuc.setMaximumSize(new java.awt.Dimension(93, 36));
+        btnKetThuc.setName(""); // NOI18N
         btnKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKetThucActionPerformed(evt);
@@ -198,10 +200,9 @@ public class MainJF extends javax.swing.JFrame {
         jToolBar1.add(btnKetThuc);
         jToolBar1.add(jSeparator6);
 
+        btnChuyenDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Lists.png"))); // NOI18N
         btnChuyenDe.setText("Chuyên đề");
         btnChuyenDe.setFocusable(false);
-        btnChuyenDe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnChuyenDe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnChuyenDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChuyenDeActionPerformed(evt);
@@ -209,10 +210,9 @@ public class MainJF extends javax.swing.JFrame {
         });
         jToolBar1.add(btnChuyenDe);
 
+        btnNguoiHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Conference.png"))); // NOI18N
         btnNguoiHoc.setText("Người học");
         btnNguoiHoc.setFocusable(false);
-        btnNguoiHoc.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNguoiHoc.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnNguoiHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNguoiHocActionPerformed(evt);
@@ -220,6 +220,7 @@ public class MainJF extends javax.swing.JFrame {
         });
         jToolBar1.add(btnNguoiHoc);
 
+        btnKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Certificate.png"))); // NOI18N
         btnKhoaHoc.setText("Khóa học");
         btnKhoaHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,10 +230,9 @@ public class MainJF extends javax.swing.JFrame {
         jToolBar1.add(btnKhoaHoc);
         jToolBar1.add(jSeparator5);
 
+        btnHuongDan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Globe.png"))); // NOI18N
         btnHuongDan.setText("Hướng dẫn");
         btnHuongDan.setFocusable(false);
-        btnHuongDan.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnHuongDan.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnHuongDan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuongDanActionPerformed(evt);
@@ -272,6 +272,7 @@ public class MainJF extends javax.swing.JFrame {
         mnuHeThong.setText("Hệ thống");
 
         mniDangNhap.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        mniDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Key.png"))); // NOI18N
         mniDangNhap.setText("Đăng nhập");
         mniDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +282,7 @@ public class MainJF extends javax.swing.JFrame {
         mnuHeThong.add(mniDangNhap);
 
         mniDangXuat.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        mniDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Exit.png"))); // NOI18N
         mniDangXuat.setText("Đăng xuât");
         mniDangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,6 +292,7 @@ public class MainJF extends javax.swing.JFrame {
         mnuHeThong.add(mniDangXuat);
         mnuHeThong.add(jSeparator1);
 
+        mniDoiMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Refresh.png"))); // NOI18N
         mniDoiMatKhau.setText("Đổi mật khẩu");
         mniDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,6 +303,7 @@ public class MainJF extends javax.swing.JFrame {
         mnuHeThong.add(jSeparator2);
 
         mniKetThuc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, 0));
+        mniKetThuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Stop.png"))); // NOI18N
         mniKetThuc.setText("Kết thúc");
         mniKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,6 +316,7 @@ public class MainJF extends javax.swing.JFrame {
 
         mnuQuanLy.setText("Quản lý");
 
+        mniQLNguoiHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Conference.png"))); // NOI18N
         mniQLNguoiHoc.setText("Người học");
         mniQLNguoiHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,6 +325,7 @@ public class MainJF extends javax.swing.JFrame {
         });
         mnuQuanLy.add(mniQLNguoiHoc);
 
+        mniQLChuyenDe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Lists.png"))); // NOI18N
         mniQLChuyenDe.setText("Chuyên đề");
         mniQLChuyenDe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,6 +334,7 @@ public class MainJF extends javax.swing.JFrame {
         });
         mnuQuanLy.add(mniQLChuyenDe);
 
+        mniQLKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Certificate.png"))); // NOI18N
         mniQLKhoaHoc.setText("Khóa học");
         mniQLKhoaHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,6 +343,7 @@ public class MainJF extends javax.swing.JFrame {
         });
         mnuQuanLy.add(mniQLKhoaHoc);
 
+        mniQLNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/User group.png"))); // NOI18N
         mniQLNhanVien.setText("Quản lý nhân viên");
         mniQLNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,6 +356,7 @@ public class MainJF extends javax.swing.JFrame {
 
         mnuThongKe.setText("Thống kê");
 
+        mniTKNguoiHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Clien list.png"))); // NOI18N
         mniTKNguoiHoc.setText("Người học từng năm");
         mniTKNguoiHoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -357,13 +366,16 @@ public class MainJF extends javax.swing.JFrame {
         mnuThongKe.add(mniTKNguoiHoc);
         mnuThongKe.add(jSeparator3);
 
+        mniTKBangDiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Card file.png"))); // NOI18N
         mniTKBangDiem.setText("Bảng điểm khóa");
         mnuThongKe.add(mniTKBangDiem);
 
+        mniTKKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Statistics.png"))); // NOI18N
         mniTKKhoaHoc.setText("Điểm từng khóa học");
         mnuThongKe.add(mniTKKhoaHoc);
         mnuThongKe.add(jSeparator4);
 
+        mniTKDoanhThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Dollar.png"))); // NOI18N
         mniTKDoanhThu.setText("Doanh thu từng chuyên đề");
         mnuThongKe.add(mniTKDoanhThu);
 
@@ -372,10 +384,12 @@ public class MainJF extends javax.swing.JFrame {
         jMenu4.setText("Trợ giúp");
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Globe.png"))); // NOI18N
         jMenuItem14.setText("Hướng dẫn sử dụng");
         jMenu4.add(jMenuItem14);
 
         jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Home.png"))); // NOI18N
         jMenuItem15.setText("Giới thiệu sản phẩm");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -14,6 +14,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+L"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Key.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng nh&#x1ead;p"/>
               </Properties>
               <Events>
@@ -25,6 +28,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Exit.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#xe2;t"/>
               </Properties>
               <Events>
@@ -35,6 +41,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniDoiMatKhau">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Refresh.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;&#x1ed5;i m&#x1ead;t kh&#x1ea9;u"/>
               </Properties>
               <Events>
@@ -47,6 +56,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F10"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Stop.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="K&#x1ebf;t th&#xfa;c"/>
               </Properties>
@@ -63,6 +75,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mniQLNguoiHoc">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Conference.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i h&#x1ecd;c"/>
               </Properties>
               <Events>
@@ -71,6 +86,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniQLChuyenDe">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Lists.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Chuy&#xea;n &#x111;&#x1ec1;"/>
               </Properties>
               <Events>
@@ -79,6 +97,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniQLKhoaHoc">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Certificate.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Kh&#xf3;a h&#x1ecd;c"/>
               </Properties>
               <Events>
@@ -87,6 +108,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniQLNhanVien">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/User group.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; nh&#xe2;n vi&#xea;n"/>
               </Properties>
               <Events>
@@ -102,6 +126,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="mniTKNguoiHoc">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Clien list.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i h&#x1ecd;c t&#x1eeb;ng n&#x103;m"/>
               </Properties>
               <Events>
@@ -112,11 +139,17 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniTKBangDiem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Card file.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="B&#x1ea3;ng &#x111;i&#x1ec3;m kh&#xf3;a"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniTKKhoaHoc">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Statistics.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="&#x110;i&#x1ec3;m t&#x1eeb;ng kh&#xf3;a h&#x1ecd;c"/>
               </Properties>
             </MenuItem>
@@ -124,6 +157,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="mniTKDoanhThu">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Dollar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Doanh thu t&#x1eeb;ng chuy&#xea;n &#x111;&#x1ec1;"/>
               </Properties>
             </MenuItem>
@@ -139,6 +175,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Globe.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="H&#x1b0;&#x1edb;ng d&#x1eab;n s&#x1eed; d&#x1ee5;ng"/>
               </Properties>
             </MenuItem>
@@ -146,6 +185,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/polypro/icon/Home.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gi&#x1edb;i thi&#x1ec7;u s&#x1ea3;n ph&#x1ea9;m"/>
               </Properties>
@@ -205,6 +247,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btnDangXuat">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Exit.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng xu&#xe2;t"/>
           </Properties>
           <Events>
@@ -213,10 +258,17 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnKetThuc">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Stop.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="K&#x1ebf;t th&#xfa;c"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
+            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
+              <Insets value="[2, 2, 2, 14]"/>
+            </Property>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[93, 36]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKetThucActionPerformed"/>
@@ -226,10 +278,11 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnChuyenDe">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Lists.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Chuy&#xea;n &#x111;&#x1ec1;"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChuyenDeActionPerformed"/>
@@ -237,10 +290,11 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnNguoiHoc">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Conference.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i h&#x1ecd;c"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNguoiHocActionPerformed"/>
@@ -248,6 +302,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnKhoaHoc">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Certificate.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Kh&#xf3;a h&#x1ecd;c"/>
           </Properties>
           <Events>
@@ -258,10 +315,11 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnHuongDan">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/polypro/icon/Globe.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="H&#x1b0;&#x1edb;ng d&#x1eab;n"/>
             <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHuongDanActionPerformed"/>

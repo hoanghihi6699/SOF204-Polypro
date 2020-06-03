@@ -85,7 +85,6 @@ public class KhoaHocDAO {
         model.setMaNV(rs.getString("MaNV"));
         model.setNgayTao(rs.getDate("NgayTao"));
         model.setMaCD(rs.getString("MaCD"));
-
         return model;
     }
 }

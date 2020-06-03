@@ -5,6 +5,15 @@
  */
 package com.polypro.ui;
 
+import com.polypro.dao.NguoiHocDAO;
+import com.polypro.helper.DateHelper;
+import com.polypro.helper.DialogHelper;
+import com.polypro.helper.ShareHelper;
+import com.polypro.model.NguoiHoc;
+import java.awt.HeadlessException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hoang
@@ -16,6 +25,134 @@ public class NguoiHocJF extends javax.swing.JFrame {
      */
     public NguoiHocJF() {
         initComponents();
+        this.load();
+        this.setStatus(true);
+
+    }
+
+    int index = 0;
+    NguoiHocDAO dao = new NguoiHocDAO();
+
+    void init() {
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
+    }
+
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
+        model.setRowCount(0);
+        try {
+            String keyword = txtTimKiem.getText();
+            List<NguoiHoc> list = dao.selectByKeyword(keyword);
+            for (NguoiHoc  nh : list) {
+                Object[] row = {
+                    nh.getMaNH(),
+                    nh.getHoTen(), nh.isGioiTinh()? "Nam" : "Nữ",
+                    DateHelper.toString(nh.getNgaySinh()),
+                    nh.getDienThoai(),
+                    nh.getEmail(),
+                    nh.getMaNV(),
+                    DateHelper.toString(nh.getNgayDK())
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void insert() {
+        NguoiHoc model = getModel();
+        try {
+            dao.insert(model);
+            this.load();
+            this.clear();
+            DialogHelper.alert(this, "Thêm mới thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Thêm mới thất bại!");
+        }
+    }
+
+    void update() {
+        NguoiHoc model = getModel();
+        try {
+            dao.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
+            String manh = txtMaNH.getText();
+            try {
+                dao.delete(manh);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (HeadlessException e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    void clear() {
+        NguoiHoc model = new NguoiHoc();
+        model.setMaNV(ShareHelper.USER.getMaNV());
+        model.setNgayDK(DateHelper.now());
+        this.setModel(model);
+    }
+
+    void edit() {
+        try {
+            String manh = (String) tblGridView.getValueAt(this.index, 0);
+            NguoiHoc model = dao.findById(manh);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void setModel(NguoiHoc model) {
+        txtMaNH.setText(model.getMaNH());
+        txtHoTen1.setText(model.getHoTen());
+        cboGioiTinh.setSelectedIndex(model.isGioiTinh() ? 0 : 1);
+        txtNgaySinh.setText(DateHelper.toString(model.getNgaySinh()));
+        txtDienThoai.setText(model.getDienThoai());
+        txtEmail.setText(model.getEmail());
+        txtGhiChu.setText(model.getGhiChu());
+    }
+
+    NguoiHoc getModel() {
+        NguoiHoc model = new NguoiHoc();
+        model.setMaNH(txtMaNH.getText());
+        model.setHoTen(txtHoTen1.getText());
+        model.setGioiTinh(cboGioiTinh.getSelectedIndex() == 0);
+        model.setNgaySinh(DateHelper.toDate(txtNgaySinh.getText()));
+        model.setDienThoai(txtDienThoai.getText());
+        model.setEmail(txtEmail.getText());
+        model.setGhiChu(txtGhiChu.getText());
+        model.setMaNV(ShareHelper.USER.getMaNV());
+        model.setNgayDK(DateHelper.now());
+        return model;
+    }
+
+    void setStatus(boolean insertable) {
+        txtMaNH.setEditable(insertable);
+        btnInsert1.setEnabled(insertable);
+        btnUpdate1.setEnabled(!insertable);
+        btnDelete1.setEnabled(!insertable);
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGridView.getRowCount() - 1;
+        btnFirst1.setEnabled(!insertable && first);
+        btnPrev1.setEnabled(!insertable && first);
+        btnLast1.setEnabled(!insertable && last);
+        btnNext1.setEnabled(!insertable && last);
     }
 
     /**
@@ -57,7 +194,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblGridView = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -259,7 +396,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnTimKiem)
                 .addContainerGap(34, Short.MAX_VALUE))
@@ -270,7 +407,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(txtTimKiem))
                 .addContainerGap())
         );
 
@@ -380,22 +517,14 @@ public class NguoiHocJF extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClear1;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDelete1;
-    private javax.swing.JButton btnFirst;
     private javax.swing.JButton btnFirst1;
-    private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnInsert1;
-    private javax.swing.JButton btnLast;
     private javax.swing.JButton btnLast1;
-    private javax.swing.JButton btnNext;
     private javax.swing.JButton btnNext1;
-    private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnPrev1;
     private javax.swing.JButton btnTimKiem;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdate1;
     private javax.swing.JComboBox<String> cboGioiTinh;
     private javax.swing.JLabel jLabel1;
@@ -403,35 +532,22 @@ public class NguoiHocJF extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JRadioButton rdoNhanVien;
-    private javax.swing.JRadioButton rdoTruongPhong;
     private javax.swing.JTable tblGridView;
     private javax.swing.JTextField txtDienThoai;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextArea txtGhiChu;
-    private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtHoTen1;
     private javax.swing.JTextField txtMaNH;
-    private javax.swing.JTextField txtMaNV;
-    private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtNgaySinh;
-    private javax.swing.JTextField txtXacNhanMK;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

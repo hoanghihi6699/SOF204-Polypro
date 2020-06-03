@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class NhanVienDAO {
 
     public void insert(NhanVien model) {
-        String sql = "INSERT INTO NhanVien (MaNV, MatKhau, HoTen, VaiTro) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO NhanVien (MaNV, MKNV, HoTen, VaiTro) VALUES (?, ?, ?, ?)";
         JdbcHelper.executeUpdate(sql,
                 model.getMaNV(),
                 model.getMatKhau(),
@@ -28,7 +28,7 @@ public class NhanVienDAO {
     }
 
     public void update(NhanVien model) {
-        String sql = "UPDATE NhanVien SET MatKhau=?, HoTen=?, VaiTro=? WHERE MaNV=?";
+        String sql = "UPDATE NhanVien SET MKNV=?, HoTen=?, VaiTro=? WHERE MaNV=?";
         JdbcHelper.executeUpdate(sql,
                 model.getMatKhau(),
                 model.getHoTen(),
