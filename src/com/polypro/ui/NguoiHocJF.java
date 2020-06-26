@@ -121,7 +121,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
     
     void delete() {
         
-        if (hvDAO.findByMaNH(txtMaNH.getText())) {
+        if (hvDAO.findByMaNH(txtMaNH.getText()) != null) {
             DialogHelper.alert(this, "Bạn không thể xóa học viên này!");
         } else {
             if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
