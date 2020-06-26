@@ -5,6 +5,7 @@
  */
 package com.polypro.ui;
 
+import com.polypro.dao.HocVienDAO;
 import com.polypro.dao.NguoiHocDAO;
 import com.polypro.helper.DateHelper;
 import com.polypro.helper.DialogHelper;
@@ -25,6 +26,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
      */
     public NguoiHocJF() {
         initComponents();
+        init();
         this.load();
         this.setStatus(true);
 
@@ -36,6 +38,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
     void init() {
         setIconImage(ShareHelper.APP_ICON);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     void load() {
@@ -44,10 +47,10 @@ public class NguoiHocJF extends javax.swing.JFrame {
         try {
             String keyword = txtTimKiem.getText();
             List<NguoiHoc> list = dao.selectByKeyword(keyword);
-            for (NguoiHoc  nh : list) {
+            for (NguoiHoc nh : list) {
                 Object[] row = {
                     nh.getMaNH(),
-                    nh.getHoTen(), nh.isGioiTinh()? "Nam" : "Nữ",
+                    nh.getHoTen(), nh.isGioiTinh() ? "Nam" : "Nữ",
                     DateHelper.toString(nh.getNgaySinh()),
                     nh.getDienThoai(),
                     nh.getEmail(),
@@ -60,6 +63,37 @@ public class NguoiHocJF extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
+
+    public boolean check() {
+        if (txtMaNH.getText().isEmpty() || txtNgaySinh.getText().isEmpty() || txtDienThoai.getText().isEmpty()
+                || txtHoTen1.getText().isEmpty()) {
+            DialogHelper.alert(this, "Vui lòng nhập đầy đủ thông tin");
+            return false;
+        } else if (!(txtEmail.getText()).matches("^[\\w-_\\.]+\\@[\\w&&[^0-9]]+\\.com$")) {
+            DialogHelper.alert(this, "Sai định dạng email");
+            txtEmail.requestFocus();
+            return false;
+        } else if (!(txtMaNH.getText()).matches("CD[0-9]{1,5}")) {
+            DialogHelper.alert(this, "Sai định dạng mã \n VD : NV01");
+            txtMaNH.requestFocus();
+            return false;
+        } else if (!(txtDienThoai.getText()).matches("[0-9]{1,11}")) {
+            DialogHelper.alert(this, "Học phí phải nhập số");
+            txtDienThoai.requestFocus();
+            return false;
+        }
+        List<NguoiHoc> list = dao.select();
+        for (int i = 0; i < list.size(); i++) {
+            if (txtMaNH.getText().equals(list.get(i).getMaNH())) {
+                DialogHelper.alert(this, "Trùng mã người học");
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    ;
 
     void insert() {
         NguoiHoc model = getModel();
@@ -83,17 +117,23 @@ public class NguoiHocJF extends javax.swing.JFrame {
             DialogHelper.alert(this, "Cập nhật thất bại!");
         }
     }
-
+    HocVienDAO hvDAO = new HocVienDAO();
+    
     void delete() {
-        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
-            String manh = txtMaNH.getText();
-            try {
-                dao.delete(manh);
-                this.load();
-                this.clear();
-                DialogHelper.alert(this, "Xóa thành công!");
-            } catch (HeadlessException e) {
-                DialogHelper.alert(this, "Xóa thất bại!");
+        
+        if (hvDAO.findByMaNH(txtMaNH.getText())) {
+            DialogHelper.alert(this, "Bạn không thể xóa học viên này!");
+        } else {
+            if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
+                String manh = txtMaNH.getText();
+                try {
+                    dao.delete(manh);
+                    this.load();
+                    this.clear();
+                    DialogHelper.alert(this, "Xóa thành công!");
+                } catch (HeadlessException e) {
+                    DialogHelper.alert(this, "Xóa thất bại!");
+                }
             }
         }
     }
@@ -165,7 +205,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         txtMaNH = new javax.swing.JTextField();
@@ -203,7 +243,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setText("QUẢN LÝ NGƯỜI HỌC");
 
-        jTabbedPane2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabs.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         jLabel7.setText("Mã người học");
 
@@ -256,12 +296,32 @@ public class NguoiHocJF extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txtGhiChu);
 
         btnInsert1.setText("Thêm");
+        btnInsert1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsert1ActionPerformed(evt);
+            }
+        });
 
         btnUpdate1.setText("Sửa");
+        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdate1ActionPerformed(evt);
+            }
+        });
 
         btnDelete1.setText("Xóa");
+        btnDelete1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelete1ActionPerformed(evt);
+            }
+        });
 
         btnClear1.setText("Mới");
+        btnClear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClear1ActionPerformed(evt);
+            }
+        });
 
         btnFirst1.setText("|<");
         btnFirst1.addActionListener(new java.awt.event.ActionListener() {
@@ -271,10 +331,25 @@ public class NguoiHocJF extends javax.swing.JFrame {
         });
 
         btnPrev1.setText("<<");
+        btnPrev1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrev1ActionPerformed(evt);
+            }
+        });
 
         btnNext1.setText(">>");
+        btnNext1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNext1ActionPerformed(evt);
+            }
+        });
 
         btnLast1.setText(">|");
+        btnLast1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLast1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -366,10 +441,10 @@ public class NguoiHocJF extends javax.swing.JFrame {
                     .addComponent(btnPrev1)
                     .addComponent(btnNext1)
                     .addComponent(btnLast1))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("CẬP NHẬT", jPanel2);
+        tabs.addTab("CẬP NHẬT", jPanel2);
 
         tblGridView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -379,6 +454,11 @@ public class NguoiHocJF extends javax.swing.JFrame {
                 "Mã NH", "Họ tên", "Giới tính", "Ngày sinh", "Điện thoại", "Email", "Mã NV", "Ngày ĐK"
             }
         ));
+        tblGridView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridViewMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblGridView);
 
         jPanel4.setBackground(new java.awt.Color(51, 153, 255));
@@ -424,10 +504,10 @@ public class NguoiHocJF extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("DANH SÁCH", jPanel3);
+        tabs.addTab("DANH SÁCH", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -437,7 +517,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -446,8 +526,8 @@ public class NguoiHocJF extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -467,6 +547,8 @@ public class NguoiHocJF extends javax.swing.JFrame {
 
     private void btnFirst1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirst1ActionPerformed
         // TODO add your handling code here:
+        this.index = 0;
+        this.edit();
     }//GEN-LAST:event_btnFirst1ActionPerformed
 
     private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
@@ -479,7 +561,63 @@ public class NguoiHocJF extends javax.swing.JFrame {
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
+        this.load();
+        this.clear();
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.index = tblGridView.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                tabs.setSelectedIndex(0);
+            }
+        }
+    }//GEN-LAST:event_tblGridViewMouseClicked
+
+    private void btnInsert1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert1ActionPerformed
+        // TODO add your handling code here:
+        this.insert();
+    }//GEN-LAST:event_btnInsert1ActionPerformed
+
+    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnUpdate1ActionPerformed
+
+    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete1ActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnDelete1ActionPerformed
+
+    private void btnClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear1ActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+        btnClear1.setEnabled(true);
+        btnInsert1.setEnabled(true);
+        btnUpdate1.setEnabled(false);
+        btnDelete1.setEnabled(false);
+    }//GEN-LAST:event_btnClear1ActionPerformed
+
+    private void btnPrev1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrev1ActionPerformed
+        // TODO add your handling code here:
+        this.index--;
+        this.edit();
+    }//GEN-LAST:event_btnPrev1ActionPerformed
+
+    private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
+        // TODO add your handling code here:
+        this.index++;
+        this.edit();
+
+    }//GEN-LAST:event_btnNext1ActionPerformed
+
+    private void btnLast1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLast1ActionPerformed
+        // TODO add your handling code here:
+        this.index = tblGridView.getRowCount() - 1;
+        this.edit();
+    }//GEN-LAST:event_btnLast1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -540,7 +678,7 @@ public class NguoiHocJF extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblGridView;
     private javax.swing.JTextField txtDienThoai;
     private javax.swing.JTextField txtEmail;

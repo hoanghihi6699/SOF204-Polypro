@@ -35,7 +35,7 @@ public class MainJF extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setSize(1280, 760);
         setIconImage(ShareHelper.APP_ICON);
-        setLocationRelativeTo(null);    
+        setLocationRelativeTo(null);
 
         new Timer(1000, new ActionListener() {
             SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss a");
@@ -70,7 +70,8 @@ public class MainJF extends javax.swing.JFrame {
 
     void openThongKe(int index) {
         if (ShareHelper.authenticated()) {
-            new ThongKeJF(index).setVisible(true);
+            ThongKeJF s = new ThongKeJF();
+            s.setVisible(true);
         } else {
             DialogHelper.alert(this, "Vui lòng đăng nhập!");
         }
@@ -368,15 +369,30 @@ public class MainJF extends javax.swing.JFrame {
 
         mniTKBangDiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Card file.png"))); // NOI18N
         mniTKBangDiem.setText("Bảng điểm khóa");
+        mniTKBangDiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniTKBangDiemActionPerformed(evt);
+            }
+        });
         mnuThongKe.add(mniTKBangDiem);
 
         mniTKKhoaHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Statistics.png"))); // NOI18N
         mniTKKhoaHoc.setText("Điểm từng khóa học");
+        mniTKKhoaHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniTKKhoaHocActionPerformed(evt);
+            }
+        });
         mnuThongKe.add(mniTKKhoaHoc);
         mnuThongKe.add(jSeparator4);
 
         mniTKDoanhThu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/polypro/icon/Dollar.png"))); // NOI18N
         mniTKDoanhThu.setText("Doanh thu từng chuyên đề");
+        mniTKDoanhThu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniTKDoanhThuActionPerformed(evt);
+            }
+        });
         mnuThongKe.add(mniTKDoanhThu);
 
         jMenuBar1.add(mnuThongKe);
@@ -468,6 +484,8 @@ public class MainJF extends javax.swing.JFrame {
 
     private void mniTKNguoiHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTKNguoiHocActionPerformed
         // TODO add your handling code here:
+        ThongKeJF.tabIndex = 0;
+        this.openThongKe(WIDTH);
     }//GEN-LAST:event_mniTKNguoiHocActionPerformed
 
     private void btnChuyenDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDeActionPerformed
@@ -488,6 +506,24 @@ public class MainJF extends javax.swing.JFrame {
     private void btnHuongDanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuongDanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnHuongDanActionPerformed
+
+    private void mniTKBangDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTKBangDiemActionPerformed
+        // TODO add your handling code here:
+        ThongKeJF.tabIndex = 1;
+        this.openThongKe(WIDTH);
+    }//GEN-LAST:event_mniTKBangDiemActionPerformed
+
+    private void mniTKKhoaHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTKKhoaHocActionPerformed
+        // TODO add your handling code here:
+        ThongKeJF.tabIndex = 2;
+        this.openThongKe(WIDTH);
+    }//GEN-LAST:event_mniTKKhoaHocActionPerformed
+
+    private void mniTKDoanhThuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniTKDoanhThuActionPerformed
+        // TODO add your handling code here:
+        ThongKeJF.tabIndex = 3;
+        this.openThongKe(WIDTH);
+    }//GEN-LAST:event_mniTKDoanhThuActionPerformed
 
     /**
      * @param args the command line arguments

@@ -29,6 +29,7 @@ public class NguoiHocDAO {
                 model.getEmail(),
                 model.getGhiChu(),
                 model.getMaNV());
+        System.out.println(model.getMaNV());
     }
 
     public void update(NguoiHoc model) {

@@ -12,6 +12,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -122,6 +125,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -144,7 +150,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="H&#x1ecc;C VI&#xca;N TRONG KH&#xd3;A"/>
+        <Property name="text" type="java.lang.String" value="H&#x1ecc;C VI&#xca;N C&#x1ee6;A KH&#xd3;A"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">
@@ -207,14 +213,18 @@
             <Component class="javax.swing.JTable" name="tblGridView">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="5" rowCount="1">
+                    <Column editable="true" title="M&#xc3; HV" type="java.lang.Object"/>
+                    <Column editable="true" title="M&#xc3; NH" type="java.lang.Object"/>
+                    <Column editable="true" title="H&#x1ecc; V&#xc0; T&#xca;N" type="java.lang.Object"/>
+                    <Column editable="true" title="&#x110;I&#x1ec2;M" type="java.lang.Object"/>
+                    <Column editable="true" title="X&#xd3;A" type="java.lang.Object"/>
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblGridViewMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -226,6 +236,9 @@
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="T&#x1ea5;t c&#x1ea3;"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoTatCaMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdoDaNhap">
           <Properties>
@@ -234,6 +247,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x110;&#xe3; nh&#x1ead;p &#x111;i&#x1ec3;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoDaNhapMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdoChuaNhap">
           <Properties>
@@ -242,11 +258,17 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Ch&#x1b0;a nh&#x1ead;p &#x111;i&#x1ec3;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoChuaNhapMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCapNhat">
           <Properties>
             <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

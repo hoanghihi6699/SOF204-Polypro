@@ -50,6 +50,18 @@ public class HocVienDAO {
         List<HocVien> list = select(sql, mahv);
         return list.size() > 0 ? list.get(0) : null;
     }
+    
+    public boolean findByMaNH(String manh) {
+        String sql = "SELECT * FROM HocVien WHERE MaNH=?";
+        System.out.println(sql);
+        List<HocVien> list = select(sql, manh);
+        if(list != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     private List<HocVien> select(String sql, Object... args) {
         List<HocVien> list = new ArrayList<>();
@@ -73,7 +85,7 @@ public class HocVienDAO {
     private HocVien readFromResultSet(ResultSet rs) throws SQLException {
         HocVien model = new HocVien();
         model.setMaHV(rs.getInt("MaHV"));
-        model.setMaKH(rs.getInt("KH"));
+        model.setMaKH(rs.getInt("MaKH"));
         model.setMaNH(rs.getString("MaNH"));
         model.setDiem(rs.getDouble("Diem"));
         return model;

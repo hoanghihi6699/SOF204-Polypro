@@ -33,7 +33,7 @@ public class NhanVienJF extends javax.swing.JFrame {
 
     void init() {
         System.out.println("Quan ly nhan vien");
-        setSize(1280, 760);
+        setSize(1280, 800);
         setIconImage(ShareHelper.APP_ICON);
         setLocationRelativeTo(null);
 

@@ -5,6 +5,15 @@
  */
 package com.polypro.ui;
 
+import com.polypro.dao.ChuyenDeDAO;
+import com.polypro.helper.DialogHelper;
+import com.polypro.helper.ShareHelper;
+import com.polypro.model.ChuyenDe;
+import java.io.File;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hoang
@@ -16,6 +25,180 @@ public class ChuyenDeJF extends javax.swing.JFrame {
      */
     public ChuyenDeJF() {
         initComponents();
+        init();
+        this.load();
+        this.setStatus(true);
+    }
+
+    int index = 0;
+    ChuyenDeDAO dao = new ChuyenDeDAO();
+
+    void init() {
+        System.out.println("Quan ly chuyen de");
+        setSize(980, 640);
+        setIconImage(ShareHelper.APP_ICON);
+        setLocationRelativeTo(null);
+    }
+
+    void load() {
+        DefaultTableModel model = (DefaultTableModel) tblGridView.getModel();
+        model.setRowCount(0);
+        try {
+            List<ChuyenDe> list = dao.select();
+            for (ChuyenDe cd : list) {
+                Object[] row = {cd.getMaCD(),
+                    cd.getTenCD(),
+                    cd.getHocPhi(),
+                    cd.getThoiLuong(),
+                    cd.getHinh()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+    
+    public boolean check() {
+    
+        if (txtMaCD.getText().equals("") || txtTenCD.getText().equals("") || txtThoiLuong.getText().equals("")
+                || txtHocPhi.getText().equals("") || txtMoTaCD.getText().equals("")  ) {
+            DialogHelper.alert(this, "Hãy nhập đủ dữ liệu sau đó ấn Save");
+            return false;
+        }else if (!(txtMaCD.getText()).matches("CD[0-9]{1,9}")) {
+            DialogHelper.alert(this, "Sai định dạng mã \n VD : NV01");
+            txtMaCD.requestFocus();
+            return false;
+        }else if (!(txtThoiLuong.getText()).matches("[0-9]{1,99}")) {
+            DialogHelper.alert(this, "Thời lượng phải nhập số dương");
+            txtThoiLuong.requestFocus();
+            return false;
+        }else if (!(txtHocPhi.getText()).matches("[0-9]{1,99}")) {
+            DialogHelper.alert(this, "Học phí phải nhập số dương");
+            txtHocPhi.requestFocus();
+            return false;
+        }
+        
+        
+       List<ChuyenDe> list = dao.select(); 
+                for(int i=0; i< list.size();i++){
+            if(txtMaCD.getText().equalsIgnoreCase(list.get(i).getMaCD())){
+                DialogHelper.alert(this, "Trùng Mã Chuyên Đề");
+                return false;
+            }
+        }
+        
+        
+        
+       
+        return true;
+    }
+
+    void insert() {
+        ChuyenDe model = getModel(); 
+        if (model.getHinh() == null) {
+                DialogHelper.alert(this, "Hình Không Được Để Trống");
+                return ;
+            }
+        try { 
+            dao.insert(model); 
+            this.load(); 
+            this.clear(); 
+            DialogHelper.alert(this, "Thêm mới thành công!"); 
+        }  
+        catch (Exception e) { 
+            DialogHelper.alert(this, "Thêm mới thất bại!"); 
+        } 
+    }
+
+    void update() {
+        ChuyenDe model = getModel();
+        try {
+            dao.update(model);
+            this.load();
+            DialogHelper.alert(this, "Cập nhật thành công!");
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Cập nhật thất bại!");
+        }
+    }
+
+    void delete() {
+        if (DialogHelper.confirm(this, "Bạn có muốn xóa hay không?")) {
+            String macd = txtMaCD.getText();
+            try {
+                dao.delete(macd);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (Exception e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    void clear() {
+        this.setModel(new ChuyenDe());
+        this.setStatus(true);
+    }
+
+    void edit() {
+        try {
+            String macd = (String) tblGridView.getValueAt(this.index, 0);
+            ChuyenDe model = dao.findById(macd);
+            if (model != null) {
+                this.setModel(model);
+                this.setStatus(false);
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void setModel(ChuyenDe model) {
+        txtMaCD.setText(model.getMaCD());
+        txtTenCD.setText(model.getTenCD());
+        txtThoiLuong.setText(String.valueOf(model.getThoiLuong()));
+        txtHocPhi.setText(String.valueOf(model.getHocPhi()));
+        txtMoTaCD.setText(model.getMoTa());
+        lblHinh.setToolTipText(model.getHinh());
+        if (model.getHinh() != null) {
+            lblHinh.setIcon(ShareHelper.readLogo(model.getHinh()));
+        }
+    }
+
+    ChuyenDe getModel() {
+        ChuyenDe model = new ChuyenDe();
+        model.setMaCD(txtMaCD.getText());
+        model.setTenCD(txtTenCD.getText());
+        model.setThoiLuong(Integer.valueOf(txtThoiLuong.getText()));
+        model.setHocPhi(Double.valueOf(txtHocPhi.getText()));
+        model.setHinh(lblHinh.getToolTipText());
+        model.setMoTa(txtMoTaCD.getText());
+        return model;
+    }
+
+    void setStatus(boolean insertable) {
+        txtMaCD.setEditable(insertable);
+        btnInsert.setEnabled(insertable);
+        btnUpdate.setEnabled(!insertable);
+        btnDelete.setEnabled(!insertable);
+        boolean first = this.index > 0;
+        boolean last = this.index < tblGridView.getRowCount() - 1;
+        btnFirst.setEnabled(!insertable && first);
+        btnPrev.setEnabled(!insertable && first);
+        btnLast.setEnabled(!insertable && last);
+        btnNext.setEnabled(!insertable && last);
+    }
+
+    void selectImage() {
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (ShareHelper.saveLogo(file)) {
+                // Hiển thị hình lên form
+                lblHinh.setIcon(ShareHelper.readLogo(file.getName()));
+                lblHinh.setToolTipText(file.getName());
+            }
+        }
     }
 
     /**
@@ -29,18 +212,18 @@ public class ChuyenDeJF extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabs = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        lblHinh = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lblHinh = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtMaCD = new javax.swing.JTextField();
-        txtTenCD = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtThoiLuong = new javax.swing.JTextField();
+        txtTenCD = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtHocPhi = new javax.swing.JTextField();
+        txtThoiLuong = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        txtHocPhi = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMoTaCD = new javax.swing.JTextArea();
@@ -63,7 +246,9 @@ public class ChuyenDeJF extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setText("QUẢN LÝ CHUYÊN ĐỀ");
 
-        jTabbedPane1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        tabs.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
+        jLabel3.setText("Hình / Logo");
 
         lblHinh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblHinh.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -71,8 +256,6 @@ public class ChuyenDeJF extends javax.swing.JFrame {
                 lblHinhMouseClicked(evt);
             }
         });
-
-        jLabel3.setText("Hình / Logo");
 
         jLabel4.setText("Mã chuyên đề");
 
@@ -89,20 +272,60 @@ public class ChuyenDeJF extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtMoTaCD);
 
         btnInsert.setText("Thêm");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Sửa");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnClear.setText("Mới");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnFirst.setText("|<");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
 
         btnPrev.setText("<<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
 
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,7 +411,7 @@ public class ChuyenDeJF extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("CẬP NHẬT", jPanel1);
+        tabs.addTab("CẬP NHẬT", jPanel1);
 
         tblGridView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -198,6 +421,11 @@ public class ChuyenDeJF extends javax.swing.JFrame {
                 "Mã CD", "Tên CD", "Học phí", "Thời lượng", "Hình"
             }
         ));
+        tblGridView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGridViewMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblGridView);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -213,7 +441,7 @@ public class ChuyenDeJF extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("DANH SÁCH", jPanel2);
+        tabs.addTab("DANH SÁCH", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,7 +450,7 @@ public class ChuyenDeJF extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tabs, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -232,7 +460,7 @@ public class ChuyenDeJF extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(tabs)
                 .addContainerGap())
         );
 
@@ -241,8 +469,70 @@ public class ChuyenDeJF extends javax.swing.JFrame {
 
     private void lblHinhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseClicked
         // TODO add your handling code here:
-        
+        this.selectImage();
     }//GEN-LAST:event_lblHinhMouseClicked
+
+    private void tblGridViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridViewMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            this.index = tblGridView.rowAtPoint(evt.getPoint());
+            if (this.index >= 0) {
+                this.edit();
+                tabs.setSelectedIndex(0);
+            }
+        }
+    }//GEN-LAST:event_tblGridViewMouseClicked
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        // TODO add your handling code here:
+        try{
+             
+         if(check()){
+             this.insert();
+         }
+         }catch(Exception e){
+             DialogHelper.alert(rootPane, "Lỗi, Vui lòng xem lại");
+         }
+    }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        this.clear();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+        this.index = 0;
+        this.edit();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        this.index--;
+        this.edit();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        this.index++;
+        this.edit();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        this.index = tblGridView.getRowCount() - 1;
+        this.edit();
+    }//GEN-LAST:event_btnLastActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,8 +590,8 @@ public class ChuyenDeJF extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblHinh;
+    private javax.swing.JTabbedPane tabs;
     private javax.swing.JTable tblGridView;
     private javax.swing.JTextField txtHocPhi;
     private javax.swing.JTextField txtMaCD;

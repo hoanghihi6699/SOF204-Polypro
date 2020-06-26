@@ -22,7 +22,7 @@ public class ThongKeDAO {
         try {
             ResultSet rs = null;
             try {
-                String sql = "{call sp_ThongKeNguoiHoc}";
+                String sql = "{call sp_THONGKENGUOIHOC}";
                 rs = JdbcHelper.executeQuery(sql);
                 while (rs.next()) {
                     Object[] model = {
@@ -46,13 +46,13 @@ public class ThongKeDAO {
 
     }
 
-    public List<Object[]> getBangDiem(Integer makh) {
+    public List<Object[]> getBangDiem(Integer MaKH) {
         List<Object[]> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
                 String sql = "{call sp_BangDiem (?)}";
-                rs = JdbcHelper.executeQuery(sql, makh);
+                rs = JdbcHelper.executeQuery(sql, MaKH);
                 while (rs.next()) {
                     double diem = rs.getDouble("Diem");
                     String xepLoai = "Xuất sắc";
