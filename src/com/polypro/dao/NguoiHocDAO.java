@@ -57,11 +57,13 @@ public class NguoiHocDAO {
 
     public List<NguoiHoc> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM NguoiHoc WHERE HoTen LIKE ?";
+        System.out.println(select(sql,"%" + keyword + "%"));
         return select(sql, "%" + keyword + "%");
     }
 
     public List<NguoiHoc> selectByCourse(Integer makh) {
         String sql = "SELECT * FROM NguoiHoc WHERE MaNH NOT IN (SELECT MaNH FROM HocVien WHERE MaKH=?)";
+        System.out.println(select(sql,makh));
         return select(sql, makh);
     }
 

@@ -50,12 +50,11 @@ public class HocVienDAO {
         List<HocVien> list = select(sql, mahv);
         return list.size() > 0 ? list.get(0) : null;
     }
-    
+
     public HocVien findByMaNH(String manh) {
+        System.out.println(manh);
         String sql = "SELECT * FROM HocVien WHERE MaNH=?";
-        System.out.println(sql);
         List<HocVien> list = select(sql, manh);
-        System.out.println(list.get(0));
         return list.size() > 0 ? list.get(0) : null;
     }
 

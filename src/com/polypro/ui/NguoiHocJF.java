@@ -118,22 +118,17 @@ public class NguoiHocJF extends javax.swing.JFrame {
         }
     }
     HocVienDAO hvDAO = new HocVienDAO();
-    
+
     void delete() {
-        
-        if (hvDAO.findByMaNH(txtMaNH.getText()) != null) {
-            DialogHelper.alert(this, "Bạn không thể xóa học viên này!");
-        } else {
-            if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
-                String manh = txtMaNH.getText();
-                try {
-                    dao.delete(manh);
-                    this.load();
-                    this.clear();
-                    DialogHelper.alert(this, "Xóa thành công!");
-                } catch (HeadlessException e) {
-                    DialogHelper.alert(this, "Xóa thất bại!");
-                }
+        if (DialogHelper.confirm(this, "Bạn thực sự muốn xóa người học này?")) {
+            String manh = txtMaNH.getText();
+            try {
+                dao.delete(manh);
+                this.load();
+                this.clear();
+                DialogHelper.alert(this, "Xóa thành công!");
+            } catch (HeadlessException e) {
+                DialogHelper.alert(this, "Xóa thất bại!");
             }
         }
     }
